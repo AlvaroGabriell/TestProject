@@ -29,7 +29,7 @@ public class PlayerController : MonoBehaviour
         attributes.maxHealth.SetBaseValue(20f);
         attributes.healthRegen.SetBaseValue(0f);
         attributes.regenSpeed.SetBaseValue(2f);
-        attributes.moveSpeed.SetBaseValue(3f);
+        attributes.moveSpeed.SetBaseValue(4f);
         attributes.attackDamage.SetBaseValue(6.5f);
         attributes.attackSpeed.SetBaseValue(1.5f);
         attributes.projectileSpeed.SetBaseValue(8f);
@@ -58,7 +58,7 @@ public class PlayerController : MonoBehaviour
 
     private void OnDeath(DamageSource source)
     {
-        gameObject.transform.position = Vector3.zero;
+        gameObject.transform.position = new Vector3(0f, -5.26f, 0f);
         health.Revive();
 
         OnPlayerDeath?.Invoke();
