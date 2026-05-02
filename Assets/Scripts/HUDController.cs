@@ -28,7 +28,7 @@ public class HUDController : MonoBehaviour
 
     private float GetHighestDetectionProgress()
     {
-        LightConeBehaviour[] cones = FindObjectsByType<LightConeBehaviour>(FindObjectsSortMode.None);
+        LightConeBehaviour[] cones = FindObjectsByType<LightConeBehaviour>();
 
         float highest = 0f;
         foreach (LightConeBehaviour cone in cones)
