@@ -1,6 +1,7 @@
 using System.Collections;
 using Unity.VisualScripting;
 using UnityEngine;
+using UnityEngine.InputSystem;
 
 public class Utils
 {
@@ -13,7 +14,7 @@ public class Utils
     * </summary> **/
     public static GameObject GetPlayer()
     {
-        if (player.IsUnityNull()) player = GameObject.FindGameObjectWithTag("Player");
+        if (player.IsUnityNull() || player == null) player = Object.FindAnyObjectByType<PlayerInput>().gameObject;
         return player;
     }
 

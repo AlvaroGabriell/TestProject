@@ -50,8 +50,14 @@ public class LightConeBehaviour : MonoBehaviour
     {
         if (collision.CompareTag("Player"))
         {
-            playerHealth = collision.GetComponent<HealthSystem>();
-            detectionTimer = 0f;
+            if(gameObject.CompareTag("Enemy")){
+                playerHealth = collision.GetComponent<HealthSystem>();
+                detectionTimer = 0f;
+            }
+            else if (gameObject.CompareTag("Ally"))
+            {
+                
+            }
         }
     }
 
@@ -59,12 +65,16 @@ public class LightConeBehaviour : MonoBehaviour
     {
         if (collision.CompareTag("Player"))
         {
-            detectionTimer += Time.fixedDeltaTime;
+            if(gameObject.CompareTag("Enemy")){
+                if(playerHealth != null && !playerHealth.isInvulnerable){
+                    detectionTimer += Time.fixedDeltaTime;
 
-            if (detectionTimer >= detectionTimeToKill && playerHealth != null)
-            {
-                playerHealth.Kill(DamageSource.ENEMY);
-                detectionTimer = 0f;
+                    if (detectionTimer >= detectionTimeToKill)
+                    {
+                        playerHealth.Kill(DamageSource.ENEMY);
+                        detectionTimer = 0f;
+                    }
+                }
             }
         }
     }
@@ -73,8 +83,10 @@ public class LightConeBehaviour : MonoBehaviour
     {
         if (collision.CompareTag("Player"))
         {
-            detectionTimer = 0f;
-            playerHealth = null;
+            if(gameObject.CompareTag("Enemy")){
+                detectionTimer = 0f;
+                playerHealth = null;
+            }
         }
     }
 }

@@ -6,9 +6,9 @@ using UnityEngine;
 public class DamageFeedback : MonoBehaviour
 {
     private SpriteRenderer spriteRenderer;
-
     private HealthSystem health;
     private AttributesSystem attributes;
+    Color original = Color.white;
 
     private Coroutine invulnerabilityCoroutine;
 
@@ -18,19 +18,19 @@ public class DamageFeedback : MonoBehaviour
         attributes = GetComponent<AttributesSystem>();
         spriteRenderer = GetComponentInChildren<SpriteRenderer>();
 
-        health.OnDamageTaken += OnDamageTaken;
+        health.OnDeath += OnDeath;
     }
 
     void OnDestroy()
     {
-        health.OnDamageTaken -= OnDamageTaken;
+        health.OnDeath -= OnDeath;
     }
 
-    private void OnDamageTaken(float damage, DamageSource source)
+    private void OnDeath(DamageSource source)
     {
         float duration = attributes.invulnerabilityTime.FinalValue;
 
-        if (invulnerabilityCoroutine != null) StopCoroutine(invulnerabilityCoroutine);
+        ResetState();
         invulnerabilityCoroutine = StartCoroutine(InvulnerabilityRoutine(duration));
     }
 
@@ -38,7 +38,7 @@ public class DamageFeedback : MonoBehaviour
     {
         health.isInvulnerable = true;
 
-        Color original = spriteRenderer.color;
+        original = spriteRenderer.color;
 
         spriteRenderer.color = Color.red;
         yield return new WaitForSeconds(0.1f);
@@ -63,6 +63,14 @@ public class DamageFeedback : MonoBehaviour
 
         spriteRenderer.color = original;
         health.isInvulnerable = false;
+        invulnerabilityCoroutine = null;
+    }
+
+    private void ResetState()
+    {
+        spriteRenderer.color = original;
+        health.isInvulnerable = false;
+        if(invulnerabilityCoroutine != null) StopCoroutine(invulnerabilityCoroutine);
         invulnerabilityCoroutine = null;
     }
 }

@@ -59,35 +59,34 @@ public class PlayerController : MonoBehaviour
     private void OnDeath(DamageSource source)
     {
         gameObject.transform.position = new Vector3(0f, -5.26f, 0f);
-        health.Revive();
-
         OnPlayerDeath?.Invoke();
+        health.Revive();
     }
     private void OnDamageTaken(float damage, DamageSource source)
     {
         if(damageBlinkCoroutine != null) StopCoroutine(damageBlinkCoroutine);
     }
 
-    void OnTriggerEnter2D(Collider2D collision)
-    {
-        if (collision.CompareTag("Enemy"))
-        {
-            if (collision.gameObject.GetComponent<EnemyBehaviour>() != null)
-            {
-                health.TakeDamage(collision.gameObject.GetComponent<EnemyBehaviour>().GetEnemyDamage(), DamageSource.ENEMY);
-                //enemy.GetComponent<HealthSystem>().Kill(DamageSource.PLAYER);
-            } else if(collision.gameObject.transform.parent.GetComponent<EnemyBehaviour>() != null)
-            {
-                health.TakeDamage(collision.gameObject.transform.parent.GetComponent<EnemyBehaviour>().GetEnemyDamage(), DamageSource.ENEMY);
-                //collision.gameObject.transform.parent.GetComponent<HealthSystem>().Kill(DamageSource.PLAYER);
-            }
-        }
-    }
+    //void OnTriggerEnter2D(Collider2D collision)
+    //{
+    //    if (collision.CompareTag("Enemy"))
+    //    {
+    //        if (collision.gameObject.GetComponent<EnemyBehaviour>() != null)
+    //        {
+    //            health.TakeDamage(collision.gameObject.GetComponent<EnemyBehaviour>().GetEnemyDamage(), DamageSource.ENEMY);
+    //            //enemy.GetComponent<HealthSystem>().Kill(DamageSource.PLAYER);
+    //        } else if(collision.gameObject.transform.parent.GetComponent<EnemyBehaviour>() != null)
+    //        {
+    //            health.TakeDamage(collision.gameObject.transform.parent.GetComponent<EnemyBehaviour>().GetEnemyDamage(), DamageSource.ENEMY);
+    //            //collision.gameObject.transform.parent.GetComponent<HealthSystem>().Kill(DamageSource.PLAYER);
+    //        }
+    //    }
+    //}
 
-    void OnTriggerStay2D(Collider2D collision)
-    {
-        if (collision.CompareTag("Enemy")) OnTriggerEnter2D(collision);
-    }
+    //void OnTriggerStay2D(Collider2D collision)
+    //{
+    //    if (collision.CompareTag("Enemy")) OnTriggerEnter2D(collision);
+    //}
 
     //Calcula e executa o movimento do jogador
     public void HandleMovement()

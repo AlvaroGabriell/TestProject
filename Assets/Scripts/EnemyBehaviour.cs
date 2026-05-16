@@ -61,6 +61,7 @@ public class EnemyBehaviour : MonoBehaviour
 
     void FixedUpdate()
 {
+    if(!GameController.Instance.GameStarted) return;
     Vector2 targetPos;
 
     switch (patrolDirection)
