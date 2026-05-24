@@ -6,7 +6,7 @@ public class UIController : MonoBehaviour
 {
     public static UIController Instance { get; private set; }
 
-    public GameObject mainMenu, pauseMenu, winScreen;
+    public GameObject HUDScreen, mainMenu, pauseMenu, winScreen;
 
     private Stack<GameObject> menuStack = new();
 
@@ -72,7 +72,7 @@ public class UIController : MonoBehaviour
         GameController.Instance.PauseGame();
         Utils.GetPlayer().GetComponent<PlayerInput>().actions.FindActionMap("Player").Disable();
     }
-    public void OnContinue()
+    public void OnResume()
     {
         CloseCurrentMenu();
         GameController.Instance.ResumeGame();

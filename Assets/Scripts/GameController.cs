@@ -39,6 +39,7 @@ public class GameController : MonoBehaviour
         GameStarted = false;
         GlobalVolume.Instance.DisableDOF();
         Utils.GetPlayer().GetComponent<PlayerInput>().actions.FindActionMap("Player").Disable();
+        UIController.Instance.HUDScreen.SetActive(false);
         UIController.Instance.OpenMenu(UIController.Instance.mainMenu);
     }
 
@@ -46,6 +47,7 @@ public class GameController : MonoBehaviour
     {
         GameStarted = true;
         Utils.GetPlayer().GetComponent<PlayerInput>().actions.FindActionMap("Player").Enable();
+        UIController.Instance.HUDScreen.SetActive(true);
         OnGameStarted?.Invoke();
     }
 
@@ -62,7 +64,7 @@ public class GameController : MonoBehaviour
 
         yield return SceneManager.LoadSceneAsync("CenaProtótipo", LoadSceneMode.Additive);
 
-        UIController.Instance.CloseAllMenus();
+        //UIController.Instance.CloseAllMenus();
 
         if(toMainMenu) BootGame();
         else StartGame();
@@ -72,6 +74,7 @@ public class GameController : MonoBehaviour
     {
         Time.timeScale = 0f;
         IsPaused = true;
+        UIController.Instance.HUDScreen.SetActive(false);
         OnGamePaused?.Invoke();
     }
 
@@ -79,6 +82,7 @@ public class GameController : MonoBehaviour
     {
         Time.timeScale = 1f;
         IsPaused = false;
+        UIController.Instance.HUDScreen.SetActive(true);
         OnGameResumed?.Invoke();
     }
 }
